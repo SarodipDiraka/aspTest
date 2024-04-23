@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<table id = "itemList" class="table mb-4">
+    <thead>
+        <tr>
+            <th scope="col">Todo item</th>
+            <th scope="col">Completed</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var toDoElement in Model)
+        {
+            <tr>
+                <td>@toDoElement.Text</td>
+                <td>
+                    <input class="form-check-input" type="checkbox" checked="@toDoElement.Completed" onClick="return false;">
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = @toDoElement.Id}, new { @class = "btn btn-danger"})
+                    @Html.ActionLink("Finished", "Finish", new { id = @toDoElement.Id}, new { @class = "btn btn-success ms-1"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form
+    class="row row-cols-lg-auto g-3 justify-content-center aling-items-center mb-4 pb-2"
+    id="addToDoElement" method="post" enctype="multipart/form-data">
+    <div class="col-12">
+        <div class="form-outline">
+            <input type="text" id="textElement" name="textElement" class="form-control" />
+            <label class="form-label" for="form1">Enter a task here</label>
+        </div>
+    </div>
+
+    <div class="col-12">
+         <input type="button" id="inputTextElement" class="btn btn-primary" value="Save" onClick="FormSubmit();" />
+    </div>
+</form>
+
+@section Scripts
+{
+    <script>
+        var elText = document.getElementById("textElement");
+        async function FormSubmit() {
+
+            var url = "/Home/AddElement";
+            let response = await fetch(url + "?textElement=" + elText.value);
+            let data = await response.text();
+
+            var itemList = document.getElementById("itemList");
+            itemList.innerHTML = "";
+            itemList.innerHTML = data;
+
+            document.getElementById("textElement").value = "";
+        }
+    </script>
+}
