@@ -15,17 +15,12 @@ services:
       - 5543:5432
     networks:
       - web-release
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
   mvc-proj:
     image: mvc
     build:
       context: .
       dockerfile: asp/Dockerfile
     ports:
-      - 5199:8081
+      - 5199:8080
     networks:
         - web-release
