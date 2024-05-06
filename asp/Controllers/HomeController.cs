@@ -36,6 +36,16 @@ public class HomeController : Controller
         return PartialView("ToDoElementList", _iToDoElementsRepository.GetAll().ToList());
     }
 
+    [HttpGet]
+    public IActionResult EditElement(string textElement, int id)
+    {
+        var changedToDoElement = _iToDoElementsRepository.GetById(id);
+        changedToDoElement.Text = textElement;
+        _iToDoElementsRepository.Update(changedToDoElement);
+        _iToDoElementsRepository.SaveChanges();
+        return RedirectToAction("Index");
+    }
+
     [HttpGet, ActionName("Finish")]
     public IActionResult FinishElement(int id)
     {

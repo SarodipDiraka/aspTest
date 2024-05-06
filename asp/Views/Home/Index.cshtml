@@ -26,6 +26,12 @@
                 <td>
                     @Html.ActionLink("Delete", "Delete", new { id = @toDoElement.Id}, new { @class = "btn btn-danger"})
                     @Html.ActionLink("Finished", "Finish", new { id = @toDoElement.Id}, new { @class = "btn btn-success ms-1"})
+                    <form
+                        id="editToDoElement" method="post" enctype="multipart/form-data">
+                        <input type="text" value="@toDoElement.Text" placeholder="@toDoElement.Id" id="idElement" hidden>
+                        <input type="text" value="@toDoElement.Text" placeholder="@toDoElement.Text" id="editElement">
+                        <input type="button" id="editTextElement" class="btn btn-primary" value="Edit" onClick="FormSubmitEdit();" />
+                    </form>
                 </td>
             </tr>
         }
@@ -55,6 +61,21 @@
 
             var url = "/Home/AddElement";
             let response = await fetch(url + "?textElement=" + elText.value);
+            let data = await response.text();
+
+            var itemList = document.getElementById("itemList");
+            itemList.innerHTML = "";
+            itemList.innerHTML = data;
+
+            document.getElementById("textElement").value = "";
+        }
+
+        var elTextEdit = document.getElementById("editElement");
+        var elIdEdit = document.getElementById("idElement");
+        async function FormSubmitEdit() {
+
+            var url = "/Home/EditElement";
+            let response = await fetch(url + "?textEditElement=" + elTextEdit.value + "?idEditElement=" + elIdEdit.value);
             let data = await response.text();
 
             var itemList = document.getElementById("itemList");
