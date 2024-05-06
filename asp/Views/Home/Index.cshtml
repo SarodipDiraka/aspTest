@@ -28,7 +28,7 @@
                     @Html.ActionLink("Finished", "Finish", new { id = @toDoElement.Id}, new { @class = "btn btn-success ms-1"})
                     <form
                         id="editToDoElement" method="post" enctype="multipart/form-data">
-                        <input type="text" value="@toDoElement.Text" placeholder="@toDoElement.Id" id="idElement" hidden>
+                        <input type="number" value="@toDoElement.Id" placeholder="@toDoElement.Id" id="idElement" hidden>
                         <input type="text" value="@toDoElement.Text" placeholder="@toDoElement.Text" id="editElement">
                         <input type="button" id="editTextElement" class="btn btn-primary" value="Edit" onClick="FormSubmitEdit();" />
                     </form>
