@@ -26,6 +26,6 @@ services:
       context: .
       dockerfile: asp/Dockerfile
     ports:
-      - 5199:8080
+      - 5199:8081
     networks:
         - web-release
